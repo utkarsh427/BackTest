@@ -30,7 +30,7 @@ namespace BAckTest
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            string[] line = File.ReadAllLines(@"C:\Users\Utkarsh Saxena\Desktop\crudeback\CrudeHalfHour.txt");
+            string[] line = File.ReadAllLines(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\CrudeHalfHour.txt");
             for (int i = 0; i < line.Length; i++)
             {
                 //date open high low close
@@ -72,7 +72,7 @@ namespace BAckTest
 
         private void button2_Click(object sender, EventArgs e)
         {
-            using (var reader = new StreamReader(@"C:\Users\Utkarsh Saxena\Desktop\crudeback\c.csv"))
+            using (var reader = new StreamReader(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\c.csv"))
             {
                 var line = reader.ReadLine();
                 while (!reader.EndOfStream)
@@ -104,8 +104,9 @@ namespace BAckTest
         {
             listBox4.Items.Clear();
             listBox3.Items.Clear();
-            using (var reader = new StreamReader(@"C:\Users\Utkarsh Saxena\Desktop\crudeback\c.csv"))
-            using (var reader2 = new StreamReader(@"C:\Users\Utkarsh Saxena\Desktop\crudeback\Resis.txt"))
+        
+            using (var reader = new StreamReader(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\c.csv"))
+            using (var reader2 = new StreamReader(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\Resis.txt"))
             {
                 string value;
                 var line = reader.ReadLine();
@@ -160,7 +161,7 @@ namespace BAckTest
                     {
                         str = " belowS3";
                     }
-                    string[] lines = File.ReadAllLines(@"C:\Users\Utkarsh Saxena\Desktop\crudeback\CrudeHalfHour.txt");
+                    string[] lines = File.ReadAllLines(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\CrudeHalfHour.txt");
                     for (int i = 0; i < lines.Length; i++)
                     {
                         string[] wordfromtxt = lines[i].Split(',');
