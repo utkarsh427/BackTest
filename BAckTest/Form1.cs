@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
+using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BAckTest
@@ -92,6 +86,7 @@ namespace BAckTest
                         words[8]
                         );
                 }
+                reader.Close();
             }
         }
 
@@ -104,7 +99,7 @@ namespace BAckTest
         {
             listBox4.Items.Clear();
             listBox3.Items.Clear();
-        
+
             using (var reader = new StreamReader(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\c.csv"))
             using (var reader2 = new StreamReader(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\Resis.txt"))
             {
@@ -131,35 +126,35 @@ namespace BAckTest
                     var wordsfromvcv = line.ToString().Split(',');
                     if (r3 < double.Parse(wordsfromvcv[4]))
                     {
-                        str = " AboveR3";
+                        str = " AboveR3 ";
                     }
                     else if (r3 >= double.Parse(wordsfromvcv[4]) && double.Parse(wordsfromvcv[4]) > r2)
                     {
-                        str = " R3&R2";
+                        str = " R3&R2 ";
                     }
                     else if (r2 >= double.Parse(wordsfromvcv[4]) && double.Parse(wordsfromvcv[4]) > r1)
                     {
-                        str = " R2&R1";
+                        str = " R2&R1 ";
                     }
                     else if (r1 >= double.Parse(wordsfromvcv[4]) && double.Parse(wordsfromvcv[4]) > pp)
                     {
-                        str = " R1&PP";
+                        str = " R1&PP ";
                     }
                     else if (pp >= double.Parse(wordsfromvcv[4]) && double.Parse(wordsfromvcv[4]) > s1)
                     {
-                        str = " PP&S1";
+                        str = " PP&S1 ";
                     }
                     else if (s1 >= double.Parse(wordsfromvcv[4]) && double.Parse(wordsfromvcv[4]) > s2)
                     {
-                        str = " S1&S2";
+                        str = " S1&S2 ";
                     }
                     else if (s2 >= double.Parse(wordsfromvcv[4]) && double.Parse(wordsfromvcv[4]) > s3)
                     {
-                        str = " S2&S3";
+                        str = " S2&S3 ";
                     }
                     else if (s3 >= double.Parse(wordsfromvcv[4]))
                     {
-                        str = " belowS3";
+                        str = " belowS3 ";
                     }
                     string[] lines = File.ReadAllLines(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\CrudeHalfHour.txt");
                     for (int i = 0; i < lines.Length; i++)
@@ -178,24 +173,25 @@ namespace BAckTest
                                )
                             {
                                 string trade = wordsfromvcv[1] + wordsfromvcv[2] + wordsfromvcv[3];
-//                                if (checkif(trade))
-                                    if (
-                                            trade.Equals("000") ||
-                                            trade.Equals("001") ||
-                                            trade.Equals("010") ||
-                                            trade.Equals("011") ||
-                                            trade.Equals("101") ||
-                                            trade.Equals("110") 
-                                            )
-                                    {
-                                        //sell
-                                        Console.WriteLine(" Value " + value);
-                                    Console.WriteLine(" 2 " + double.Parse(wordfromtxt[2]));
-                                    Console.WriteLine(" 3 " + double.Parse(wordfromtxt[3]));
-                                    Console.WriteLine(" 4 " + double.Parse(wordsfromvcv[4]));
-                                    Console.WriteLine(" 6 " + double.Parse(wordfromtxt[6]));
-                                    Console.WriteLine(" TextBox " + double.Parse(textBox1.Text.ToString()));
-                                    Console.WriteLine(" Profit " + (double.Parse(wordsfromvcv[4]) - double.Parse(textBox1.Text.ToString())));
+                                //                                if (checkif(trade))
+                                if (
+                                        trade.Equals("000") ||
+                                        trade.Equals("001") ||
+                                        trade.Equals("010") ||
+                                        trade.Equals("011") ||
+                                        trade.Equals("101") ||
+                                        //                                            trade.Equals("100") ||
+                                        trade.Equals("110")
+                                        )
+                                {
+                                    //sell
+                                    //Console.WriteLine(" Value " + value);
+                                    //Console.WriteLine(" 2 " + double.Parse(wordfromtxt[2]));
+                                    //Console.WriteLine(" 3 " + double.Parse(wordfromtxt[3]));
+                                    //Console.WriteLine(" 4 " + double.Parse(wordsfromvcv[4]));
+                                    //Console.WriteLine(" 6 " + double.Parse(wordfromtxt[6]));
+                                    //Console.WriteLine(" TextBox " + double.Parse(textBox1.Text.ToString()));
+                                    //Console.WriteLine(" Profit " + (double.Parse(wordsfromvcv[4]) - double.Parse(textBox1.Text.ToString())));
                                     //                           Console.WriteLine(" ProfitBool " + (double.Parse(wordsfromvcv[4]) - double.Parse(textBox1.Text.ToString())));
 
                                     if (double.Parse(wordfromtxt[2]) >= double.Parse(wordsfromvcv[6]))
@@ -222,9 +218,23 @@ namespace BAckTest
                                         listBox3.Items.Add(Math.Abs(double.Parse(textBox1.Text.ToString())));
                                         break;
                                     }
+                                    //if (value.Split(' ')[1].Equals("23:00"))
+                                    //{
+                                    //    listBox4.Items.Add(str + wordsfromvcv[1] +
+                                    //        wordsfromvcv[2] +
+                                    //        wordsfromvcv[3] +
+                                    //        " || " + "Sell LOSS C5"
+                                    //        + value
+                                    //        );
+                                    //    listBox3.Items.Add("-" + Math.Abs(double.Parse(wordsfromvcv[6])
+                                    //        - double.Parse(wordsfromvcv[4])));
+                                    //    break;
+
+                                    //}
+
                                 }
                                 //                                if (trade.Equals("111"))
-//                                if (checkelse(trade))
+                                //                                if (checkelse(trade))
                                 else
                                 {
                                     //buy
@@ -253,28 +263,103 @@ namespace BAckTest
                                         listBox3.Items.Add(Math.Abs(double.Parse(textBox1.Text.ToString())));
                                         break;
                                     }
+                                    //if (value.Split(' ')[1].Equals("23:00"))
+                                    //{
+                                    //    listBox4.Items.Add(str + wordsfromvcv[1] +
+                                    //        wordsfromvcv[2] +
+                                    //        wordsfromvcv[3] +
+                                    //        " || " + "Buy LOSS C5"
+                                    //        + value
+                                    //        );
+                                    //    listBox3.Items.Add("-" + Math.Abs(double.Parse(wordsfromvcv[5])
+                                    //        - double.Parse(wordsfromvcv[4])));
+                                    //    break;
+                                    //}
+
+
                                 }
                             }
                         }
                     }
                 }
                 Console.WriteLine(listBox3.Items.Count);
-                int lossearned = 0, lossdays = 0, profitdays = 0,profitearned=0;
-                string [] Astring = new string[200];
+                int lossearned = 0, lossdays = 0, profitdays = 0, profitearned = 0;
                 int count = 0;
-                for(int i = 0; i < listBox4.Items.Count; i++)
-                {
-                    if (!listBox4.Items[i].ToString().Contains("PROFIT"))
+                string[] tradevalues = new string[] { "000", "001", "010", "011", "100", "101", "110", "111" };
+                using (System.IO.StreamWriter file =
+                            new System.IO.StreamWriter(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\Results.txt", false))
+                    for (int j = 0; j < tradevalues.Length; j++)
                     {
-                        Astring[count]= listBox4.Items[i].ToString();
-                        count++;
+                        ArrayList ProfitList = new ArrayList();
+                        ArrayList LossList = new ArrayList();
+                        for (int i = 0; i < listBox4.Items.Count; i++)
+                        {
+                            // if (listBox4.Items[i].ToString().Contains(""))
+                            if (listBox4.Items[i].ToString().Contains(tradevalues[j]))
+                            {
+
+                                if (listBox4.Items[i].ToString().Contains("PROFIT"))
+                                {
+                                    ProfitList.Add(listBox4.Items[i].ToString().Split(
+                                        new string[] { tradevalues[j] }, StringSplitOptions.None)[0]);
+                                }
+                                else if (listBox4.Items[i].ToString().Contains("LOSS"))
+                                {
+                                    LossList.Add(listBox4.Items[i].ToString().Split(
+                                        new string[] { tradevalues[j] }, StringSplitOptions.None)[0]);
+                                }
+                                Console.WriteLine(1);
+                            }
+                        }
+                        string loss = "", profit = "";
+                        ProfitList.Sort();
+                        LossList.Sort();
+                        var distinctprofitlist = ProfitList.ToArray().Distinct();
+                        var distinctlosslist = LossList.ToArray().Distinct();
+                        //Console.WriteLine("LB4" + listBox4.Items.Count);
+                        //Console.WriteLine(LossList.Count);
+                        //Console.WriteLine(ProfitList.Count);
+                        //Console.WriteLine("Loss" + LossList.Count);
+                        //Console.WriteLine("LIstBox2coount" + listBox4.Items.Count);
+
+                        foreach (string str in distinctprofitlist)
+                        {
+                            int conta = 0;
+                            foreach (string strin in ProfitList)
+                            {
+                                if (str.Equals(strin))
+                                {
+                                    conta++;
+                                }
+                            }
+                            profit = profit + "\t" + str + "\t" + conta;
+                        }
+                        foreach (string str in distinctlosslist)
+                        {
+                            int conta = 0;
+                            foreach (string strin in LossList)
+                            {
+                                if (str.Equals(strin))
+                                {
+                                    conta++;
+                                }
+                            }
+                            loss = loss + "\t" + str + "\t" + conta;
+                        }
+                        {
+                            file.WriteLine("Profit Data for " + tradevalues[j] + " " + profit);
+                            file.WriteLine("Loss Data for " + tradevalues[j] + " " + loss);
+                            //Console.WriteLine("Profit Data for " + tradevalues[j] + ": " + profit);
+                            //Console.WriteLine("Loss Data for " + tradevalues[j] + ": " + loss);
+                            //                            File.AppendAllText(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\Results.csv", "Profit Data for " + tradevalues[j] + ": " + profit);
+                        }
                     }
-                }
-                listBox4.Items.Clear();
-                for (int i = 0; i < count; i++)
-                {
-                    listBox4.Items.Add(Astring[i]);
-                }
+
+                string soj = "";
+                foreach (object item in listBox4.Items) soj += item.ToString() + "\r\n";
+                Clipboard.SetText(soj);
+
+
                 for (int i = 0; i < listBox3.Items.Count; i++)
                 {
                     //                    if (listBox3.Items[i].ToString().Length<4)
@@ -305,7 +390,8 @@ namespace BAckTest
                                 str = " belowS3";
                 */
 
-
+                reader.Close();
+                reader2.Close();
             }
 
         }
@@ -334,7 +420,8 @@ namespace BAckTest
                 if (trade.Equals(str))
                     return true;
                 return false;
-            }else
+            }
+            else
             {
                 return false;
             }
