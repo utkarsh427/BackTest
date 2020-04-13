@@ -180,7 +180,6 @@ namespace BAckTest
                                         trade.Equals("010") ||
                                         trade.Equals("011") ||
                                         trade.Equals("101") ||
-                                        //                                            trade.Equals("100") ||
                                         trade.Equals("110")
                                         )
                                 {
@@ -203,8 +202,14 @@ namespace BAckTest
                                             " || " + "Sell LOSS C1"
                                             + value
                                             );
-                                        listBox3.Items.Add("-" + Math.Abs(double.Parse(wordsfromvcv[6])
-                                            - double.Parse(wordsfromvcv[4])));
+                                        double loss = Math.Abs(double.Parse(wordsfromvcv[6])
+                                            - double.Parse(wordsfromvcv[4]));
+                                        if (loss > Double.Parse(textBox2.Text))
+                                        {
+//                                            loss = Double.Parse(textBox2.Text);
+                                        }
+//                                        loss=8
+                                        listBox3.Items.Add("-" + loss);
                                         break;
                                     }
                                     else if ((double.Parse(wordfromtxt[3]) < (double.Parse(wordsfromvcv[4]) - double.Parse(textBox1.Text))))
@@ -234,7 +239,7 @@ namespace BAckTest
 
                                 }
                                 //                                if (trade.Equals("111"))
-                                //                                if (checkelse(trade))
+                                //                                                                if (checkelse(trade))
                                 else
                                 {
                                     //buy
@@ -247,8 +252,13 @@ namespace BAckTest
                                             " || " + "Buy LOSS C5"
                                             + value
                                             );
-                                        listBox3.Items.Add("-" + Math.Abs(double.Parse(wordsfromvcv[5])
-                                            - double.Parse(wordsfromvcv[4])));
+                                        double loss = Math.Abs(double.Parse(wordsfromvcv[5])
+                                            - double.Parse(wordsfromvcv[4]));
+                                        if (loss > Double.Parse(textBox2.Text))
+                                        {
+//                                            loss = Double.Parse(textBox2.Text);
+                                        }
+                                        listBox3.Items.Add("-" + loss);
                                         break;
                                     }
                                     else if (double.Parse(wordfromtxt[2]) >
@@ -332,7 +342,7 @@ namespace BAckTest
                                     conta++;
                                 }
                             }
-                            profit = profit + "\t" + str + "\t" + conta;
+                            profit = profit + "," + str + "," + conta;
                         }
                         foreach (string str in distinctlosslist)
                         {
@@ -344,7 +354,7 @@ namespace BAckTest
                                     conta++;
                                 }
                             }
-                            loss = loss + "\t" + str + "\t" + conta;
+                            loss = loss + "," + str + "," + conta;
                         }
                         {
                             file.WriteLine("Profit Data for " + tradevalues[j] + " " + profit);
@@ -355,17 +365,17 @@ namespace BAckTest
                         }
                     }
 
+
                 string soj = "";
                 foreach (object item in listBox4.Items) soj += item.ToString() + "\r\n";
                 Clipboard.SetText(soj);
-
-
                 for (int i = 0; i < listBox3.Items.Count; i++)
                 {
                     //                    if (listBox3.Items[i].ToString().Length<4)
                     {
                         if (Int32.Parse(listBox3.Items[i].ToString()) < 0)
                         {
+                            Console.WriteLine("KKL" + Int32.Parse(listBox3.Items[i].ToString()));
                             lossearned = lossearned + Int32.Parse(listBox3.Items[i].ToString());
                             lossdays++;
                         }
@@ -377,7 +387,7 @@ namespace BAckTest
                     }
                     //               Console.WriteLine(listBox3.Items[i]);
                 }
-                label1.Text = "PEarned " + profitearned + "LEarned " + lossearned + " Loss Days " + lossdays + " Profit Days " + profitdays;
+                label1.Text = "TotalGame" + (profitearned + lossearned) + " PEarned " + profitearned + "LEarned " + lossearned + " Loss Days " + lossdays + " Profit Days " + profitdays;
                 //                Clipboard.SetText(string.Join(Environment.NewLine, listBox4.Items.OfType<string>()));
 
                 /*                str = " AboveR3";
@@ -393,11 +403,104 @@ namespace BAckTest
                 reader.Close();
                 reader2.Close();
             }
+            string[,] array = new string[16, 17];
+            for (int i = 0; i < 16; i++)
+            {
+                for (int j = 0; j < 17; j++)
+                {
+                    array[i, j] = " ";
+                }
+            }
 
+            using (System.IO.StreamReader file =
+                        new System.IO.StreamReader(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\Results.txt", false))
+            using (System.IO.StreamWriter file2 =
+                        new System.IO.StreamWriter(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\sectempfile.txt", false))
+            {
+                String value;
+                int y = 0;
+                while ((value = file.ReadLine()) != null)
+                {
+                    file2.WriteLine(value);
+                    value=value.Replace(" ","");
+                    Console.WriteLine(value);
+                    for (int i = 0; i < value.Split(',').Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            array[y, 0] = value.Split(',')[0];
+                        }
+                        else if (value.Split(',')[i].Equals("AboveR3"))
+                        {
+                            array[y, 1] = value.Split(',')[i];
+                            array[y, 2] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("R3&R2"))
+                        {
+                            array[y, 3] = value.Split(',')[i];
+                            array[y, 4] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("R2&R1"))
+                        {
+                            array[y, 5] = value.Split(',')[i];
+                            array[y, 6] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("R1&PP"))
+                        {
+                            array[y, 7] = value.Split(',')[i];
+                            array[y, 8] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("PP&S1"))
+                        {
+                            array[y, 9] = value.Split(',')[i];
+                            array[y, 10] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("S1&S2"))
+                        {
+                            array[y, 11] = value.Split(',')[i];
+                            array[y, 12] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("S2&S3"))
+                        {
+                            array[y, 13] = value.Split(',')[i];
+                            array[y, 14] = value.Split(',')[(i + 1)];
+                        }
+                        else if (value.Split(',')[i].Equals("belowS3"))
+                        {
+                            array[y, 15] = value.Split(',')[i];
+                            array[y, 16] = value.Split(',')[(i + 1)];
+                        }
+                    }
+                    y++;
+                }
+            }
+            using (System.IO.StreamWriter file =
+            new System.IO.StreamWriter(@"C:\Users\Utkarsh Saxena\source\repos\BackTest\crudeback\Results.txt", false))
+            {
+                for (int i = 0; i < 16; i+=2)
+                {
+                    String str = "";
+                    for (int j = 0; j < 17; j++)
+                    {
+                        file.Write(array[i, j]+"!");
+                    }
+                    file.WriteLine();
+                }
+                for (int i = 1; i < 16; i+=2)
+                {
+                    String str = "";
+                    for (int j = 0; j < 17; j++)
+                    {
+                        file.Write(array[i, j] + "!");
+                    }
+                    file.WriteLine();
+                }
+
+            }
         }
 
-        bool invert = false;
-        string str = "000";
+        bool invert = true;
+        string str = "111";
         private bool checkelse(string trade)
         {
             if (!invert)
